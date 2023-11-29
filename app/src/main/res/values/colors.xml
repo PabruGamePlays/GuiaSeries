@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="roxo">#5f0054</color>
+    <color name="roxinho">#8b368e</color>
+    <color name="lavanda">#d1b1c8</color>
+    <color name="verde">#FFBBFF26</color>
+    <color name="cinza">#595A4A</color>
+    <color name="cinzinha">#a0a0a0</color>
+</resources>
