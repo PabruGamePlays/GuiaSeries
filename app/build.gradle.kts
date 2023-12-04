@@ -39,8 +39,5 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-<<<<<<< HEAD
     implementation ("it.xabaras.android:recyclerview-swipedecorator:1.4")
-=======
->>>>>>> 4ee60dfd6a3a8782418b86217bdc54ed35051156
 }
