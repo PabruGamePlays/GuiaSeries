@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -16,9 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,15 +26,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AddNewTask extends BottomSheetDialogFragment {
 
     public static final String TAG = "AddNewTask";
     private EditText epSerie;
-    private EditText mTaskEdit;
+    private EditText nameSerie;
     private  EditText ondeVer;
     private Button saveBtn;
     private FirebaseFirestore firestore;
@@ -58,7 +55,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         epSerie = view.findViewById(R.id.ep_serie);
-        mTaskEdit = view.findViewById(R.id.task_edittext);
+        nameSerie = view.findViewById(R.id.name_serie);
         ondeVer = view.findViewById(R.id.onde_ver);
         saveBtn = view.findViewById(R.id.btnsave);
 
@@ -69,7 +66,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         final  Bundle bundle = getArguments();
 
 
-        mTaskEdit.addTextChangedListener(new TextWatcher() {
+        nameSerie.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -148,7 +145,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
 
-                String task = mTaskEdit.getText().toString();
+                String task = nameSerie.getText().toString();
                 String ver = ondeVer.getText().toString();
                 String ep = epSerie.getText().toString();
 
@@ -168,14 +165,11 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         taskMap.put("status", 0);
                         taskMap.put("time", FieldValue.serverTimestamp());
 
-                        firestore.collection("task").add(taskMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(context, "Task salva !!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
+                        firestore.collection("task").add(taskMap).addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                Toast.makeText(context, "Task salva !!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
